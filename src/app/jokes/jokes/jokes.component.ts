@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { JokesService } from '../jokes.service';
 import { Observable } from 'rxjs/Observable';
-
+import 'rxjs/add/observable/fromEvent';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/throttleTime';
 
 
 @Component({
@@ -13,25 +15,13 @@ import { Observable } from 'rxjs/Observable';
 })
 export class JokesComponent implements OnInit {
 
-  joke$: Observable<string>;
+  joke: Promise<string>;
+
   constructor(private jokes: JokesService) {}
 
   ngOnInit() {}
 
   getRandomJoke() {
-    this.joke$ = this.jokes.getRandom();
+    this.joke = this.jokes.getRandom();
   }
 }
-// }
-// export class JokesComponent implements OnInit {
-//
-//   joke: any;
-//   constructor(private jokes: JokesService) { }
-//
-//   ngOnInit() {}
-//
-//   getRandomJoke() {
-//     this.jokes.getRandom()
-//       .subscribe((joke) => this.joke = joke);
-//   }
-// }
